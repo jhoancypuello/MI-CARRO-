@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b63ce">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+<title>Honda Accord LX 2020</title>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand">Honda Accord LX 2020</div>
+    <div class="subtitle">Diagnostica · Monitorea · Mantén</div>
+  </div>
+  <div id="obdStatus" class="status-pill offline">● OBD-II desconectado</div>
+</header>
+
+<main>
+<section id="home" class="screen active">
+  <div class="vehicle-card">
+    <div class="car-icon">🚘</div>
+    <div>
+      <h1>Tu Honda, mejor cuidado</h1>
+      <p>Panel de diagnóstico y mantenimiento</p>
+      <div class="connection"><span id="homeDot" class="dot"></span><span id="homeStatus">Esperando OBD-II</span></div>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Resumen</h2><button id="demoBtn" class="mini-btn">Demo</button></div>
+  <div class="stats">
+    <div class="stat"><span>RPM</span><strong id="rpm">—</strong><small>Motor</small></div>
+    <div class="stat"><span>Velocidad</span><strong id="speed">—</strong><small>mph</small></div>
+    <div class="stat"><span>Temp. motor</span><strong id="temp">—</strong><small>°F</small></div>
+    <div class="stat"><span>Batería</span><strong id="voltage">—</strong><small>V</small></div>
+  </div>
+
+  <div class="quick-grid">
+    <button data-screen="diagnosis"><b>🔎 Diagnóstico</b><small>Check Engine y códigos</small></button>
+    <button data-screen="live"><b>📊 Datos en tiempo real</b><small>RPM, velocidad y PIDs</small></button>
+    <button data-screen="maintenance"><b>🔧 Mantenimiento</b><small>Fechas, millaje y servicios</small></button>
+    <button data-screen="more"><b>⚙️ Más</b><small>OBD-II y verificación</small></button>
+  </div>
+</section>
+
+<section id="diagnosis" class="screen">
+  <div class="page-head"><div><span class="eyebrow">CHECK ENGINE</span><h2>Diagnóstico</h2></div><div id="codeCount" class="count-badge">Cargando…</div></div>
+  <div class="scan-card">
+    <div class="scan-top"><div class="engine">⚠️</div><div><b id="scanTitle">Sin lectura OBD</b><small id="scanSubtitle">Conecta el adaptador para leer códigos reales</small></div></div>
+    <div class="row"><button id="readCodes" class="primary">Leer códigos</button><button id="clearCodes" class="secondary">Borrar códigos</button></div>
+    <div id="detectedCodes" class="detected"></div>
+  </div>
+
+  <div class="search-box">
+    <label>Buscar cualquier código OBD-II</label>
+    <div class="row"><input id="codeInput" placeholder="Ej. P0300, P0455, U0100"><button id="searchCode" class="primary">Buscar</button></div>
+  </div>
+  <div id="codeResult" class="result-card"><p>La base de diagnóstico cubre los códigos genéricos P, B, C y U disponibles para consulta.</p></div>
+  <button id="allCodesBtn" class="wide-link">Ver códigos destacados</button>
+</section>
+
+<section id="live" class="screen">
+  <div class="page-head"><div><span class="eyebrow">LIVE DATA</span><h2>Datos en tiempo real</h2></div></div>
+  <div class="data-grid">
+    <div class="live-card"><span>RPM</span><strong id="rpm2">—</strong><small>PID 0C</small></div>
+    <div class="live-card"><span>Velocidad</span><strong id="speed2">—</strong><small>PID 0D</small></div>
+    <div class="live-card"><span>Temperatura motor</span><strong id="temp2">—</strong><small>PID 05</small></div>
+    <div class="live-card"><span>Voltaje módulo</span><strong id="voltage2">—</strong><small>PID 42</small></div>
+    <div class="live-card"><span>MAF</span><strong id="maf">—</strong><small>PID 10</small></div>
+    <div class="live-card"><span>Acelerador</span><strong id="throttle">—</strong><small>PID 11</small></div>
+  </div>
+  <div class="raw-card"><b>Verificación de lectura</b><p>Fuente: <span id="liveSource">—</span></p><p>Última actualización: <span id="liveTime">—</span></p><code id="rawLive">—</code></div>
+</section>
+
+<section id="maintenance" class="screen">
+  <div class="page-head"><div><span class="eyebrow">TU AUTO</span><h2>Mantenimiento</h2></div></div>
+  <button id="addMaintenance" class="primary big">＋ Agregar mantenimiento</button>
+  <div class="tabs"><button class="tab active">Servicios</button><button class="tab">Historial</button></div>
+  <div id="maintenanceList"></div>
+</section>
+
+<section id="history" class="screen">
+  <div class="page-head"><div><span class="eyebrow">REGISTRO</span><h2>Historial</h2></div></div>
+  <div id="historyList"></div>
+</section>
+
+<section id="more" class="screen">
+  <div class="page-head"><div><span class="eyebrow">CONFIGURACIÓN</span><h2>Más</h2></div></div>
+  <div class="more-card"><div class="more-icon">🔌</div><div><b>Conexión OBD-II</b><p id="obdDetail">Esperando un método compatible con iPhone.</p></div></div>
+  <div class="more-card"><div class="more-icon">🧾</div><div><b>Última respuesta OBD</b><code id="rawObd">—</code></div></div>
+  <div class="more-card"><div class="more-icon">✓</div><div><b>Verificación</b><p>La app mostrará fuente, hora, PID/modo y respuesta cruda cuando exista una lectura real.</p></div></div>
+  <div class="more-card"><div class="more-icon">📚</div><div><b>Base de diagnósticos</b><p id="dbStatus">Cargando base de códigos…</p></div></div>
+</section>
+</main>
+
+<nav>
+  <button data-screen="home" class="active">🏠<small>Inicio</small></button>
+  <button data-screen="diagnosis">🔎<small>Diagnóstico</small></button>
+  <button data-screen="live">📊<small>Datos</small></button>
+  <button data-screen="maintenance">🔧<small>Mantenimiento</small></button>
+  <button data-screen="more">•••<small>Más</small></button>
+</nav>
+
+<dialog id="maintenanceDialog"><form method="dialog" id="maintenanceForm">
+<h3 id="maintenanceTitle">Agregar mantenimiento</h3>
+<input type="hidden" id="maintenanceId">
+<label>Tipo de servicio<select id="maintenanceType">
+<option>Aceite y filtro</option><option>Rotación de neumáticos</option><option>Inspección de frenos</option>
+<option>Filtro de aire</option><option>Filtro de cabina</option><option>Batería</option><option>Bujías</option>
+<option>Servicio de transmisión</option><option>Refrigerante</option><option>Otro</option>
+</select></label>
+<label>Fecha<input type="date" id="maintenanceDate" required></label>
+<label>Millaje<input type="number" id="maintenanceMileage" min="0" step="1" required placeholder="Ej. 45210"></label>
+<label>Notas<textarea id="maintenanceNotes" placeholder="Taller, piezas, costo, observaciones..."></textarea></label>
+<div class="row"><button type="submit" class="primary">Guardar</button><button type="button" id="cancelMaintenance" class="secondary">Cancelar</button></div>
+</form></dialog>
+
+<script src="app.js?v=5.1"></script>
+</body>
+</html>

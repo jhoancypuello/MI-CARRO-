@@ -1,0 +1,9 @@
+{
+  "name":"Honda Accord LX 2020",
+  "short_name":"Accord LX",
+  "start_url":".",
+  "display":"standalone",
+  "background_color":"#f3f6fa",
+  "theme_color":"#0b63ce",
+  "lang":"es"
+}
